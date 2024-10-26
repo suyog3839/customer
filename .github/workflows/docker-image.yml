@@ -21,6 +21,6 @@ jobs:
         java-version: '17'
     - name: Build the Docker image
       run: |
-        mvn --versions
+        mvn --version
         mvn clean install
         docker build . --file Dockerfile --tag sp-customer:$(date +%s)
