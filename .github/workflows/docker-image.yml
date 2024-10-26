@@ -15,4 +15,5 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
+      run: mvn clean install
       run: docker build . --file Dockerfile --tag sp-customer:$(date +%s)
