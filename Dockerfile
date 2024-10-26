@@ -1,4 +1,4 @@
-FROM openjdk:8-alpine3.8
+FROM openjdk:17-alpine3.14
 MAINTAINER suyog
 WORKDIR /app
 COPY ./target/*.jar /app/service.jar
