@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - uses: actions/github-script@v6
+      - uses: peter-evans/manual-approval@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
