@@ -19,6 +19,7 @@ jobs:
       with:
         distribution: 'temurin' # You can use 'zulu' or other distributions if you prefer
         java-version: '17'
+        cache: maven
     - name: Build the Docker image
       run: |
         mvn --version
