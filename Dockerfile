@@ -1,5 +1,5 @@
 FROM openjdk:17-alpine3.14
-MAINTAINER suyog
+MAINTAINER suyogp
 WORKDIR /app
 COPY ./target/*.jar /app/service.jar
 EXPOSE 8001
