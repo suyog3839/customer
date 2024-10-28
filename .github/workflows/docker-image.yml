@@ -12,7 +12,6 @@ jobs:
   DeployDev:
     name: deploy to dev
     if: github.event.ref == 'refs/heads/develop'
-    needs: build
     runs-on: ubuntu-latest
     environment:
       name: dev
@@ -23,7 +22,6 @@ jobs:
   DeployUat:
     name: deploy to uat
     if: github.event.ref == 'refs/heads/main'
-    needs: build
     runs-on: ubuntu-latest
     environment:
       name: uat
