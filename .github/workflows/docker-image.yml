@@ -5,13 +5,11 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
@@ -26,20 +24,35 @@ jobs:
         mvn clean install
         docker build . --file Dockerfile --tag sp-customer:$(date +%s)
         docker images
-  push:
+  DeployDev:
+    name: deploy to dev
+    if: github.event_name == 'pull_request'
     needs: build
     runs-on: ubuntu-latest
+    environment:
+      name: dev
+      url: 'localhost:8080'
     steps:
-      - uses: trstringer/manual-approval@v1
-        timeout-minutes: 10
-        with:
-            secret: ${{ github.TOKEN }}
-            approvers: suyog3839
-            minimum-approvals: 1
-            issue-title: "push docker 1 "
-            issue-body: "Please approve or deny the deployment of version v1.3.5."
-            exclude-workflow-initiator-as-approver: false
-            additional-approved-words: ''
-            additional-denied-words: ''
-      - name: Log in to Docker Hub
-        run: docker images
+      - name: dev deploy
+        run: echo 'deploy to dev'
+  DeployUat:
+    name: deploy to uat
+    if: github.event.ref == 'main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: uat
+      url: 'localhost:8080'
+    steps:
+      - name: uat deploy
+        run: echo 'deploy to uat'
+  DeployProd:
+    name: deploy to prod
+    needs: DeployUat
+    runs-on: ubuntu-latest
+    environment:
+      name: prod
+      url: 'localhost:8080'
+    steps:
+      - name: prod deploy
+        run: echo 'deploy to prod'
