@@ -18,7 +18,7 @@ jobs:
       name: dev
       url: 'localhost:8080'
     steps:
-      - name: dev deploy
+      - name: dev deploy b
         run: echo 'deploy to dev'
   DeployUat:
     name: deploy to uat
