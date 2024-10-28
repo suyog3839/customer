@@ -10,7 +10,7 @@ on:
 jobs:
 
   DeployDev:
-    name: deploy to dev env
+    name: deploy to dev
     if: github.event.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
     environment:
