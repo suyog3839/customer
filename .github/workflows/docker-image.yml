@@ -17,8 +17,19 @@ jobs:
       name: dev
       url: 'localhost:8080'
     steps:
-      - name: dev deploy
-        run: echo 'deploy to dev'
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # You can use 'zulu' or other distributions if you prefer
+          java-version: '17'
+      - name: dev deploy b
+        run: |
+          echo 'deploy to dev'
+          mvn clean install
+          docker build . --file Dockerfile --tag suyog3839/sp:dev
+          echo "dckr_pat_RF4UwbG8eBoUAQgIMwcB-vAbTzo" | docker login -u suyog3839 --password-stdin
+          docker push suyog3839/sp:dev
   DeployUat:
     name: deploy to uat
     if: github.event.ref == 'refs/heads/main'
@@ -27,8 +38,19 @@ jobs:
       name: uat
       url: 'localhost:8080'
     steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # You can use 'zulu' or other distributions if you prefer
+          java-version: '17'
       - name: uat deploy
-        run: echo 'deploy to uat'
+        run: |
+          echo 'deploy to uat'
+           mvn clean install
+           docker build . --file Dockerfile --tag suyog3839/sp:dev
+           echo "dckr_pat_RF4UwbG8eBoUAQgIMwcB-vAbTzo" | docker login -u suyog3839 --password-stdin
+           docker push suyog3839/sp:uat
   DeployProd:
     name: deploy to prod
     needs: DeployUat
@@ -37,5 +59,16 @@ jobs:
       name: prod
       url: 'localhost:8080'
     steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # You can use 'zulu' or other distributions if you prefer
+          java-version: '17'
       - name: prod deploy
-        run: echo 'deploy to prod'
+        run: |
+          echo 'deploy to prod'
+          mvn clean install
+          docker build . --file Dockerfile --tag suyog3839/sp:dev
+          echo "dckr_pat_RF4UwbG8eBoUAQgIMwcB-vAbTzo" | docker login -u suyog3839 --password-stdin
+          docker push suyog3839/sp:uat
