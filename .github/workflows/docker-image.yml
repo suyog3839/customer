@@ -23,6 +23,7 @@ jobs:
         with:
           distribution: 'temurin' # You can use 'zulu' or other distributions if you prefer
           java-version: '17'
+          cache: maven
       - name: dev deploy b
         run: |
           echo 'deploy to dev'
@@ -44,11 +45,12 @@ jobs:
         with:
           distribution: 'temurin' # You can use 'zulu' or other distributions if you prefer
           java-version: '17'
+          cache: maven
       - name: uat deploy
         run: |
           echo 'deploy to uat'
            mvn clean install
-           docker build . --file Dockerfile --tag suyog3839/sp:dev
+           docker build . --file Dockerfile --tag suyog3839/sp:uat
            echo "dckr_pat_RF4UwbG8eBoUAQgIMwcB-vAbTzo" | docker login -u suyog3839 --password-stdin
            docker push suyog3839/sp:uat
   DeployProd:
@@ -65,10 +67,11 @@ jobs:
         with:
           distribution: 'temurin' # You can use 'zulu' or other distributions if you prefer
           java-version: '17'
+          cache: maven
       - name: prod deploy
         run: |
           echo 'deploy to prod'
           mvn clean install
-          docker build . --file Dockerfile --tag suyog3839/sp:dev
+          docker build . --file Dockerfile --tag suyog3839/sp:prod
           echo "dckr_pat_RF4UwbG8eBoUAQgIMwcB-vAbTzo" | docker login -u suyog3839 --password-stdin
-          docker push suyog3839/sp:uat
+          docker push suyog3839/sp:prod
